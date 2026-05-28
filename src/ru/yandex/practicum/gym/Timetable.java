@@ -27,7 +27,7 @@ public class Timetable {
     }
 
     public List<TrainingSession> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
-        //как реализовать, тоже непонятно, но сложность должна быть О(1)
+
         if (timetable.containsKey(dayOfWeek)) {
             TreeMap<TimeOfDay, List<TrainingSession>> dayTimetable = timetable.get(dayOfWeek);
 
@@ -45,13 +45,13 @@ public class Timetable {
     }
 
     public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
-        //как реализовать, тоже непонятно, но сложность должна быть О(1)
+
         if (timetable.containsKey(dayOfWeek)) {
             TreeMap<TimeOfDay, List<TrainingSession>> dayTimetable = timetable.get(dayOfWeek);
 
             if (dayTimetable.containsKey(timeOfDay)) {
                 List<TrainingSession> trainingSessions = dayTimetable.get(timeOfDay);
-                return trainingSessions;
+                return new ArrayList<>(trainingSessions);
             } else {
                 return new ArrayList<>();
             }
@@ -76,8 +76,7 @@ public class Timetable {
         for (Coach coach : counts.keySet()) {
             result.add(new CounterOfTrainings(counts.get(coach), coach));
         }
-
-        result.sort((a, b) -> Integer.compare(b.getNumberOfSessions(), a.getNumberOfSessions()));
+        result.sort(Collections.reverseOrder());
         return result;
     }
 }
